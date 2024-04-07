@@ -140,15 +140,15 @@ const Bouncy = () => {
         drawBouncyThings();
 
 
+        // Add a new ball when the screen is clicked
         window.addEventListener("click", onmousedown);
         onmousedown = (event) => {
             addBouncyThingAt(event.clientX, event.clientY);
         }
 
+        // Automatically resize everything if the window size is changed
         const handleResize = () => {drawBoard();}
-
         window.addEventListener("resize", handleResize);
-
         return() => {
             window.removeEventListener("resize",handleResize);
             window.removeEventListener("click",onclick);
