@@ -4,14 +4,16 @@ import { NavLink } from "react-router-dom";
 const Selection = () => {
 
 
-    
 
-    let opts = 
-    [{name: "Bouncy", link: "./Bouncy"}, 
-    {name: "Baseball", link: "./Baseball"},]
+
+    let opts =
+        [{ name: "Bouncy", link: "./Bouncy" },
+        { name: "Baseball", link: "./Baseball" },
+        { name: "Circle", link: "./Circle" },
+        ]
 
     const optionsDisplay = () => {
-        
+
         return (
             <div>
                 {opts.map((option) => {
@@ -20,13 +22,13 @@ const Selection = () => {
                             <NavLink to={option.link}>
                                 {option.name}
                             </NavLink>
-                            <br/>
+                            <br />
                         </div>
                     )
                 })}
             </div>
         );
-        
+
     }
 
     return (

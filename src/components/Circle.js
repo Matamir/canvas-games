@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-const Bouncy = () => {
+const Circle = () => {
 
 
 
@@ -10,29 +10,31 @@ const Bouncy = () => {
         var canvas = document.getElementById("canvas");
         var context = canvas.getContext("2d");
 
-        function drawBoard() {
+        
+        var CIRCLE_SIZE = Math.min(canvas.height,canvas.width)/2;
+        const BALL_SIZE = 25;
+        const VELOCITY_ABSORBTION = 1;
+        const GRAVITY = 0.1
 
+        function updateCanvasSize() {
             canvas.width = document.documentElement.clientWidth;
             canvas.height = document.documentElement.clientHeight;
+            CIRCLE_SIZE = Math.min(canvas.height,canvas.width)/2;
+        }
+
+        function drawBackground() {
+
+            updateCanvasSize()
 
             ////////////// Background //////////////
-            context.fillStyle = "rgb(91, 206, 250)"
+            context.fillStyle = "rgb(0, 0, 25)"
             context.fillRect(0, 0, canvas.width, canvas.height)
-
-            ////////////// Grid //////////////    
-            context.lineWidth = 1;
-            context.strokeStyle = "rgb(0,0,75)";
-            for (var x = 0; x < canvas.width; x += 50) {
-                for (var y = 0; y < canvas.height; y += 50) {
-                    context.strokeRect(x, y, 50, 50);
-                }
-            }
 
             ////////////// Bowl //////////////
             context.strokeStyle = "rgb(245, 169, 184)";
             context.lineWidth = 10;
             context.beginPath();
-            context.arc(canvas.width / 2, canvas.height / 2, 500, 0, Math.PI)
+            context.arc(canvas.width / 2, canvas.height / 2, CIRCLE_SIZE, 0, Math.PI * 2)
             //context.fill();
             context.stroke();
 
@@ -72,17 +74,15 @@ const Bouncy = () => {
             let velX = 0;
             let velY = 0;
             let color = RandomColor();
-            let accelX = .01
-            let accelY = .081
+            let accelX = 0
+            let accelY = GRAVITY
 
             bouncingObject.push({ x, y, velX, velY, accelX, accelY, color })
         }
 
         function drawBouncyThings() {
             context.clearRect(0, 0, canvas.width, canvas.height);
-            drawBoard();
-
-            let BALL_SIZE = 25;
+            drawBackground();
 
             bouncingObject.forEach((object) => {
 
@@ -95,30 +95,15 @@ const Bouncy = () => {
                 velX += accelX
 
 
-                if (x > canvas.width - BALL_SIZE || x < BALL_SIZE) {
-                    velX = -velX
-                    velX = velX * .9
-                    //color = RandomColor();
-                    x = (x < BALL_SIZE) ? BALL_SIZE + 1 : canvas.width - BALL_SIZE
-                }
-
-                if (y > canvas.height - BALL_SIZE) {
-                    velY = -velY
-                    velY = velY * .975
-                    //color = RandomColor();
-                    y = (y < BALL_SIZE) ? BALL_SIZE + 1 : canvas.height - BALL_SIZE
-                }
-
-
                 let distanceFromCenter = Math.sqrt(Math.pow(x - canvas.width / 2, 2) + Math.pow(y - canvas.height / 2, 2))
-                if (Math.abs(distanceFromCenter - 500) < BALL_SIZE && y > canvas.height / 2 - BALL_SIZE) {
-                    if (distanceFromCenter - 500 < 0) {
+                if (Math.abs(distanceFromCenter - CIRCLE_SIZE) < BALL_SIZE) {
+                    if (distanceFromCenter - CIRCLE_SIZE < 0) {
 
                         // Calculate angle between ball and center of arc
                         let angle = Math.atan2(y - canvas.height / 2, x - canvas.width / 2);
 
                         // Reflect ball velocity based on angle of collision
-                        let speed = Math.sqrt(velX * velX + velY * velY) * .95;
+                        let speed = Math.sqrt(velX * velX + velY * velY) * VELOCITY_ABSORBTION;
                         angle += Math.PI; // Reverse angle for reflection
                         velX = Math.cos(angle) * speed;
                         velY = Math.sin(angle) * speed;
@@ -128,7 +113,7 @@ const Bouncy = () => {
                         let angle = Math.atan2(y - canvas.height / 2, x - canvas.width / 2);
 
                         // Reflect ball velocity based on angle of collision
-                        let speed = Math.sqrt(velX * velX + velY * velY) * .95;
+                        let speed = Math.sqrt(velX * velX + velY * velY) * VELOCITY_ABSORBTION;
                         angle += Math.PI; // Reverse angle for reflection
                         velX = -Math.cos(angle) * speed;
                         velY = -Math.sin(angle) * speed;
@@ -164,7 +149,7 @@ const Bouncy = () => {
         }
 
         // Draw everything
-        drawBoard();
+        drawBackground();
         drawBouncyThings();
 
 
@@ -175,7 +160,7 @@ const Bouncy = () => {
         }
 
         // Automatically resize everything if the window size is changed
-        const handleResize = () => { drawBoard(); }
+        const handleResize = () => { drawBackground(); }
         window.addEventListener("resize", handleResize);
         return () => {
             window.removeEventListener("resize", handleResize);
@@ -199,4 +184,4 @@ const Bouncy = () => {
         </div>
     )
 }
-export default Bouncy;
+export default Circle;
