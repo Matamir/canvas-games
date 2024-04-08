@@ -28,7 +28,7 @@ const Bouncy = () => {
                 }
             }
 
-            ////////////// Bwol //////////////
+            ////////////// Bowl //////////////
             context.strokeStyle = "rgb(245, 169, 184)";
             context.lineWidth = 10;
             context.beginPath();
@@ -79,7 +79,7 @@ const Bouncy = () => {
         }
 
         function drawBouncyThings() {
-            context.clearRect(0, 0, canvas.height, canvas.width);
+            context.clearRect(0, 0, canvas.width, canvas.height);
             drawBoard();
 
             bouncingObject.forEach((object) => {
@@ -105,6 +105,32 @@ const Bouncy = () => {
                     velY = velY * .975
                     //color = RandomColor();
                     y = (y < 25) ? 26 : canvas.height - 25
+                }
+
+
+                let distanceFromCenter = Math.sqrt(Math.pow(x - canvas.width / 2, 2) + Math.pow(y - canvas.height / 2, 2))
+                if (Math.abs(distanceFromCenter - 500) < 25 && y > canvas.height / 2) {
+                    if (distanceFromCenter - 500 < 0) {
+
+                        // Calculate angle between ball and center of arc
+                        let angle = Math.atan2(y - canvas.height / 2, x - canvas.width / 2);
+
+                        // Reflect ball velocity based on angle of collision
+                        let speed = Math.sqrt(velX * velX + velY * velY) * .95;
+                        angle += Math.PI; // Reverse angle for reflection
+                        velX = Math.cos(angle) * speed;
+                        velY = Math.sin(angle) * speed;
+
+                    } else {
+                        // Calculate angle between ball and center of arc
+                        let angle = Math.atan2(y - canvas.height / 2, x - canvas.width / 2);
+
+                        // Reflect ball velocity based on angle of collision
+                        let speed = Math.sqrt(velX * velX + velY * velY) * .95;
+                        angle += Math.PI; // Reverse angle for reflection
+                        velX = -Math.cos(angle) * speed;
+                        velY = -Math.sin(angle) * speed;
+                    }
                 }
 
 
