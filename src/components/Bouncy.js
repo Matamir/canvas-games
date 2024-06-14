@@ -1,9 +1,11 @@
-import { useEffect } from "react";
+import { useRef } from "react";
+import { useEffect, useState } from "react";
 
 const Bouncy = () => {
 
-
-
+    const [xGrav, setXGrav] = useState(.01);
+    const [yGrav, setYGrav] = useState(.081);
+    const bouncingObjects = useRef([]);
 
     useEffect(() => {
 
@@ -49,11 +51,6 @@ const Bouncy = () => {
             return "rgb(" + r + "," + g + "," + b + ")"
         }
 
-
-
-
-        let bouncingObject = []
-
         // Adds a bouncy thing at a random location with random velocity
         function addBouncyThing() {
             let x = Math.random() * (canvas.width - 50);
@@ -62,7 +59,7 @@ const Bouncy = () => {
             let velY = Math.random() * 5;
             let color = RandomColor();
 
-            bouncingObject.push({ x, y, velX, velY, color })
+            bouncingObjects.current.push({ x, y, velX, velY, color })
         }
 
         // Adds a bouncy thing at mouse click location with no velocity
@@ -72,10 +69,10 @@ const Bouncy = () => {
             let velX = 0;
             let velY = 0;
             let color = RandomColor();
-            let accelX = .01
-            let accelY = .081
+            let accelX = xGrav
+            let accelY = yGrav
 
-            bouncingObject.push({ x, y, velX, velY, accelX, accelY, color })
+            bouncingObjects.current.push({ x, y, velX, velY, accelX, accelY, color })
         }
 
         function drawBouncyThings() {
@@ -84,16 +81,15 @@ const Bouncy = () => {
 
             let BALL_SIZE = 25;
 
-            bouncingObject.forEach((object) => {
+            bouncingObjects.current.forEach((object) => {
 
                 let { x, y, velX, velY, accelX, accelY, color } = object;
 
                 x += velX;
                 y += velY;
 
-                velY += accelY
                 velX += accelX
-
+                velY += accelY
 
                 if (x > canvas.width - BALL_SIZE || x < BALL_SIZE) {
                     velX = -velX
@@ -182,10 +178,19 @@ const Bouncy = () => {
             window.removeEventListener("click", onclick);
 
         }
-    }, []);
+    }, [xGrav, yGrav]);
 
     return (
         <div>
+            <div class = "slider">
+                <input type="range" min="-.1" max= ".1" value ={xGrav} class="slider" id="xGrav" step="0.01" 
+                    onChange={(x) => setXGrav(parseFloat(x.target.value))} />
+                    {xGrav}
+                <input type="range" min="-.1" max= ".1" value ={yGrav} class="slider"  id="yGrav" step="0.01"
+                    onChange={(y) => setYGrav(parseFloat(y.target.value))} />
+                    {yGrav}
+            </div>
+
             <canvas
                 style={{
                     backgroundColor: "",
@@ -195,6 +200,7 @@ const Bouncy = () => {
 
             </canvas>
 
+            
 
         </div>
     )
