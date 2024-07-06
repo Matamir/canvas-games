@@ -10,6 +10,7 @@ const Selection = () => {
         [{ name: "Bouncy", link: "./Bouncy" },
         { name: "Baseball", link: "./Baseball" },
         { name: "Circle", link: "./Circle" },
+        { name: "Estimation Game", link: "./EstimationGame" },
         ]
 
     const optionsDisplay = () => {
