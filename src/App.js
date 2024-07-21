@@ -10,6 +10,7 @@ import Selection from './components/Selection';
 import Baseball from './components/Baseball';
 import Circle from './components/Circle';
 import EstimationGame from './components/EstimationGame'
+import ColorGuessr from './components/ColorGuessr'
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route exact path="/Baseball" element={<Baseball />} />
         <Route exact path="/Circle" element={<Circle />} />
         <Route exact path="/EstimationGame" element={<EstimationGame />} />
+        <Route exact path="/ColorGuessr" element={<ColorGuessr />} />
       </Routes>
     </Router>
   );

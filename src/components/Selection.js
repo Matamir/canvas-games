@@ -3,14 +3,12 @@ import { NavLink } from "react-router-dom";
 
 const Selection = () => {
 
-
-
-
     let opts =
         [{ name: "Bouncy", link: "./Bouncy" },
         { name: "Baseball", link: "./Baseball" },
         { name: "Circle", link: "./Circle" },
         { name: "Estimation Game", link: "./EstimationGame" },
+        { name: "Color Guessr", link: "./ColorGuessr" },
         ]
 
     const optionsDisplay = () => {
