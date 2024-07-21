@@ -1,40 +1,69 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const ColorGuessr = () => {
 
-    let rGuess = Math.ceil(Math.random() * 255)
-    let gGuess = Math.ceil(Math.random() * 255)
-    let bGuess = Math.floor(Math.random() * 255)
-    let guess = "rgb(" + rGuess + "," + gGuess + "," + bGuess + ")"
-    let colors = []
+    let [colors, setColors] = useState([])
+    let [pick, setPick] = useState("")
 
-    let placement = Math.random() * 9
+    function resetPick() {
+        let newColors = []
 
-    for (let i = 0; i < 9; i++) {
+        let rPick = Math.ceil(Math.random() * 255)
+        let gPick = Math.ceil(Math.random() * 255)
+        let bPick = Math.floor(Math.random() * 255)
 
-        if (i == placement) {
-            colors.push(guess)
-        } else {
+        let newPick = "rgb(" + rPick + "," + gPick + "," + bPick + ")"
+        let placement = Math.floor(Math.random() * 9)
 
 
-            let r = Math.ceil(Math.random() * 255)
-            let g = Math.ceil(Math.random() * 255)
-            let b = Math.floor(Math.random() * 255)
+        for (let i = 0; i < 9; i++) {
 
-            colors.push("rgb(" + r + "," + g + "," + b + ")")
+            if (i == placement) {
+                newColors.push(newPick)
+            } else {
 
-            console.log(colors[i])
+
+                let r = Math.ceil(Math.random() * 255)
+                let g = Math.ceil(Math.random() * 255)
+                let b = Math.floor(Math.random() * 255)
+
+                newColors.push("rgb(" + r + "," + g + "," + b + ")")
+
+                console.log(newColors[i])
+            }
         }
+
+        setColors(newColors)
+        setPick(newPick)
     }
+
+    useEffect(() => {
+        resetPick();
+    }, []);
+
+    console.log(colors)
 
     let square = -1;
 
+    function guess(index) {
+        console.log(colors[index])
+        if (colors[index] == pick) {
+            window.alert(" YOU GUESSED CORRECT, GREAT JOB!!")
+            resetPick()
+        } else {
+            console.log("huh?")
+            let square = document.getElementById("square" + index)
+            square.style.backgroundColor = "white"
+        }
+    }
 
     function col() {
         square++
 
-        return <div className="col" style={{ backgroundColor: colors[square] }} />
+        let index = square;
+        return <div id={"square" + square} className="col" style={{ backgroundColor: colors[square] }} onClick={() => { guess(index) }} />
     }
 
     function row() {
@@ -44,7 +73,7 @@ const ColorGuessr = () => {
     }
 
     return <div>
-        <div style={{ height: "5vh", fontSize:"3vh", margin: "auto", textAlign: "center" }}> {guess} </div>
+        <div style={{ height: "5vh", fontSize: "3vh", margin: "auto", textAlign: "center" }}> {pick} </div>
         <div className="container" style={{ marginTop: "0vh" }}>
             {row()} {row()} {row()}
         </div>
