@@ -31,7 +31,7 @@ const ColorGuessr = () => {
 
                 newColors.push("rgb(" + r + "," + g + "," + b + ")")
 
-                console.log(newColors[i])
+                //console.log(newColors[i])
             }
         }
 
@@ -43,17 +43,16 @@ const ColorGuessr = () => {
         resetPick();
     }, []);
 
-    console.log(colors)
+    //console.log(colors)
 
     let square = -1;
 
     function guess(index) {
-        console.log(colors[index])
+        //console.log(colors[index])
         if (colors[index] == pick) {
             window.alert(" YOU GUESSED CORRECT, GREAT JOB!!")
             resetPick()
         } else {
-            console.log("huh?")
             let square = document.getElementById("square" + index)
             square.style.backgroundColor = "white"
         }

@@ -9,6 +9,7 @@ const Selection = () => {
         { name: "Circle", link: "./Circle" },
         { name: "Estimation Game", link: "./EstimationGame" },
         { name: "Color Guessr", link: "./ColorGuessr" },
+        { name: "Color Matcher", link: "./ColorMatcher" },
         ]
 
     const optionsDisplay = () => {
