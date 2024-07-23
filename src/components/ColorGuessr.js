@@ -6,6 +6,21 @@ const ColorGuessr = () => {
 
     let [colors, setColors] = useState([])
     let [pick, setPick] = useState("")
+    let [difficulty, setdifficulty] = useState(9)
+
+    const [size, setSize] = useState("vw")
+
+    function updateWindowSize() {
+        if (window.innerWidth > window.innerHeight) {
+            setSize("vh")
+        } else {
+            setSize("vw")
+        }
+    }
+
+    useEffect(() => { updateWindowSize(); }, []);
+    window.addEventListener("resize", updateWindowSize);
+
 
     function resetPick() {
         let newColors = []
@@ -18,10 +33,12 @@ const ColorGuessr = () => {
         let placement = Math.floor(Math.random() * 9)
 
 
-        for (let i = 0; i < 9; i++) {
+        for (let i = 0; i < difficulty; i++) {
 
             let square = document.getElementById("square" + i)
-            square.textContent = ""
+            if (square) {
+                square.textContent = ""
+            }
 
             if (i == placement) {
                 newColors.push(newPick)
@@ -65,19 +82,24 @@ const ColorGuessr = () => {
         square++
 
         let index = square;
-        return <div id={"square" + square} className="col" style={{ backgroundColor: colors[square], color: colors[square], fontWeight: "bold", textAlign: "center", paddingTop: "10vh" }} onClick={() => { guess(index) }} textContent="" />
-    }
-
-    function row() {
-        return <div className="row" style={{ width: "100%", height: "30vh" }}>
-            {col()} {col()} {col()}
-        </div>
+        return <div id={"square" + square} className="col-1"
+            style={{
+                backgroundColor: colors[square],
+                color: colors[square],
+                width: "30" + size,
+                height: "30" + size,
+                fontWeight: "bold",
+                textAlign: "center",
+                fontSize: "3" + size,
+                paddingTop: "10vh"
+            }}
+            onClick={() => { guess(index) }} textContent="" />
     }
 
     return <div>
         <div style={{ height: "5vh", fontSize: "3vh", margin: "auto", textAlign: "center" }}> {pick} </div>
-        <div className="container" style={{ marginTop: "0vh" }}>
-            {row()} {row()} {row()}
+        <div className="row">
+            {colors.map(() => { return col() })}
         </div>
     </div>
 
