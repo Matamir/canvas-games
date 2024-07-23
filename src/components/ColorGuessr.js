@@ -57,8 +57,6 @@ const ColorGuessr = () => {
         } else {
             let square = document.getElementById("square" + index)
             square.textContent = colors[index]
-            square.style.color = colors[index]
-            square.style.fontWeight = "bold"
             square.style.backgroundColor = "white"
         }
     }
@@ -67,7 +65,7 @@ const ColorGuessr = () => {
         square++
 
         let index = square;
-        return <div id={"square" + square} className="col" style={{ backgroundColor: colors[square] }} onClick={() => { guess(index) }} textContent="" />
+        return <div id={"square" + square} className="col" style={{ backgroundColor: colors[square], color: colors[square], fontWeight: "bold", textAlign: "center", paddingTop: "10vh" }} onClick={() => { guess(index) }} textContent="" />
     }
 
     function row() {
