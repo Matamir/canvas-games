@@ -20,6 +20,9 @@ const ColorGuessr = () => {
 
         for (let i = 0; i < 9; i++) {
 
+            let square = document.getElementById("square" + i)
+            square.textContent = ""
+
             if (i == placement) {
                 newColors.push(newPick)
             } else {
@@ -31,7 +34,6 @@ const ColorGuessr = () => {
 
                 newColors.push("rgb(" + r + "," + g + "," + b + ")")
 
-                //console.log(newColors[i])
             }
         }
 
@@ -54,6 +56,9 @@ const ColorGuessr = () => {
             resetPick()
         } else {
             let square = document.getElementById("square" + index)
+            square.textContent = colors[index]
+            square.style.color = colors[index]
+            square.style.fontWeight = "bold"
             square.style.backgroundColor = "white"
         }
     }
@@ -62,7 +67,7 @@ const ColorGuessr = () => {
         square++
 
         let index = square;
-        return <div id={"square" + square} className="col" style={{ backgroundColor: colors[square] }} onClick={() => { guess(index) }} />
+        return <div id={"square" + square} className="col" style={{ backgroundColor: colors[square] }} onClick={() => { guess(index) }} textContent="" />
     }
 
     function row() {
