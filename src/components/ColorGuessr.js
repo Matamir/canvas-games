@@ -6,7 +6,7 @@ const ColorGuessr = () => {
 
     let [colors, setColors] = useState([])
     let [pick, setPick] = useState("")
-    let [difficulty, setdifficulty] = useState(9)
+    let [difficulty, setDifficulty] = useState(9)
 
     const [size, setSize] = useState("vw")
 
@@ -30,7 +30,7 @@ const ColorGuessr = () => {
         let bPick = Math.floor(Math.random() * 255)
 
         let newPick = "rgb(" + rPick + "," + gPick + "," + bPick + ")"
-        let placement = Math.floor(Math.random() * 9)
+        let placement = Math.floor(Math.random() * difficulty)
 
 
         for (let i = 0; i < difficulty; i++) {
@@ -96,9 +96,18 @@ const ColorGuessr = () => {
             onClick={() => { guess(index) }} textContent="" />
     }
 
+    const handleInput = (event) => {
+        setDifficulty(event.target.value)
+    }
+
     return <div>
-        <div style={{ height: "5vh", fontSize: "3vh", margin: "auto", textAlign: "center" }}> {pick} </div>
-        <div className="row">
+        <div style={{ height: "5vh", fontSize: "3vh", margin: "auto", textAlign: "center" }}>
+            difficulty slider: <input id="red" style={{ width: "10%" }} onInput={handleInput} type="range" min={2} max={50} value={difficulty} step="1" />
+            <br />
+            {pick}
+
+        </div>
+        <div className="row" style={{ marginTop: "5vh" }} >
             {colors.map(() => { return col() })}
         </div>
     </div>
