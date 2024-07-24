@@ -71,6 +71,49 @@ const ColorMatcher = () => {
                 <div style={{ width: "10%" }}> B: {bGuess} </div>
                 <input id="blue" style={{ width: "80%" }} onInput={() => { updateGuess("blue") }} type="range" min={0} max={255} value={bGuess} step="1" />
             </div>
+
+            <br></br>
+            <button
+
+                style={{
+                    width: "50%",
+                    height: "5vh",
+                    marginLeft: "25%"
+                }}
+
+                onClick={() => {
+                    let nums = goal.split(",")
+                    let rGoal = nums[0].split("(")[1]
+                    let gGoal = nums[1]
+                    let bGoal = nums[2].split(")")[0]
+                    //window.alert ( rGoal + " ... " + gGoal + " ... " + bGoal)
+
+                    let distance =
+                        Math.sqrt(
+                            Math.pow(rGuess - rGoal, 2) +
+                            Math.pow(gGuess - gGoal, 2) +
+                            Math.pow(bGuess - bGoal, 2)) /
+                        Math.sqrt(
+                            (255) ^ 2 +
+                            (255) ^ 2 +
+                            (255) ^ 2
+                        )
+
+                    if (distance == 0) { 
+                        window.alert("Wow you got it exact! You must be some kind of wizard!")
+                        resetGoal();
+                    }
+                    else if (distance < 1) {
+                        window.alert("Great Job!!")
+                        resetGoal();
+                    } else if (distance < 2) {
+                        window.alert("So close! Keep trying")
+                    } else {
+                        window.alert("You can do better than that! Try again!")
+                    }
+                }}>
+
+                Check </button>
         </div>
     </div >
 
