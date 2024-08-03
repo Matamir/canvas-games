@@ -21,14 +21,22 @@ const Selection = () => {
         { name: "Color Matcher", link: "./ColorMatcher", image: colorMatcherImage },
         ]
 
-    const [size, setSize] = useState("vw")
+    const [size, setSize] = useState(200)
 
     function updateWindowSize() {
-        if (window.innerWidth < window.innerHeight) {
-            setSize("vh")
-        } else {
-            setSize("vw")
-        }
+        setSize(
+            Math.max(
+                (window.innerWidth / opts.length),
+                (window.innerWidth /
+                    (Math.floor(window.innerWidth / 200)))
+            )
+        )
+
+        // if (window.innerWidth < window.innerHeight) {
+        //     setSize("vh")
+        // } else {
+        //     setSize("vw")
+        // }
     }
 
     useEffect(() => { updateWindowSize(); }, []);
@@ -45,9 +53,9 @@ const Selection = () => {
                         <NavLink
                             className="col-1 border"
                             style={{
-                                height: "33" + size,
+                                height: size + "px",
                                 paddingLeft: "10vw",
-                                width: "33" + size,
+                                width: size + "px",
                                 backgroundImage: `url(${option.image})`,
                                 backgroundSize: "cover",
                                 backgroundPosition: "center"

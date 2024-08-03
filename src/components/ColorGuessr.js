@@ -8,14 +8,23 @@ const ColorGuessr = () => {
     let [pick, setPick] = useState("")
     let [difficulty, setDifficulty] = useState(9)
 
-    const [size, setSize] = useState("vw")
+    const [size, setSize] = useState(200)
 
     function updateWindowSize() {
-        if (window.innerWidth > window.innerHeight) {
-            setSize("vh")
-        } else {
-            setSize("vw")
-        }
+
+        setSize(
+            Math.max(
+                (window.innerWidth / difficulty),
+                (window.innerWidth /
+                    (Math.floor(window.innerWidth / 200)))
+            )
+        )
+
+        // if (window.innerWidth > window.innerHeight) {
+        //     setSize("vh")
+        // } else {
+        //     setSize("vw")
+        // }
     }
 
     useEffect(() => { updateWindowSize(); }, []);
@@ -86,8 +95,8 @@ const ColorGuessr = () => {
             style={{
                 backgroundColor: colors[square],
                 color: colors[square],
-                width: "30" + size,
-                height: "30" + size,
+                width: size + "px",
+                height: size + "px",
                 fontWeight: "bold",
                 textAlign: "center",
                 fontSize: "3" + size,
