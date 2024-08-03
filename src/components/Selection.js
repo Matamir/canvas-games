@@ -25,10 +25,13 @@ const Selection = () => {
 
     function updateWindowSize() {
         setSize(
-            Math.max(
-                (window.innerWidth / opts.length),
-                (window.innerWidth /
-                    (Math.floor(window.innerWidth / 200)))
+            Math.min(
+                (window.innerWidth / 2),
+                Math.max(
+                    (window.innerWidth / opts.length),
+                    (window.innerWidth /
+                        (Math.floor(window.innerWidth / 200)))
+                )
             )
         )
 
