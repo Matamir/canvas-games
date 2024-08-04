@@ -68,6 +68,7 @@ const ColorGuessr = () => {
 
         setColors(newColors)
         setPick(newPick)
+        updateWindowSize();
     }
 
     useEffect(() => {

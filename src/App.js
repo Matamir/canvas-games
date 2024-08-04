@@ -23,8 +23,8 @@ function App() {
         <Route exact path="/Baseball" element={<Baseball />} />
         <Route exact path="/Circle" element={<Circle />} />
         <Route exact path="/EstimationGame" element={<EstimationGame />} />
-        <Route exact path="/ColorGuessr" element={<ColorGuessr />} />\
-        <Route exact path="/ColorMatcher" element={<ColorMatcher />} />\
+        <Route exact path="/ColorGuessr" element={<ColorGuessr />} />
+        <Route exact path="/ColorMatcher" element={<ColorMatcher />} />
 
       </Routes>
     </Router>
