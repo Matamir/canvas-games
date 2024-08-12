@@ -12,6 +12,8 @@ import Circle from './components/Circle';
 import EstimationGame from './components/EstimationGame'
 import ColorGuessr from './components/ColorGuessr'
 import ColorMatcher from './components/ColorMatcher'
+import PlatformerGame from './components/PlatformerGame'
+import ColorFinder from './components/ColorFinder'
 
 
 function App() {
@@ -25,6 +27,8 @@ function App() {
         <Route exact path="/EstimationGame" element={<EstimationGame />} />
         <Route exact path="/ColorGuessr" element={<ColorGuessr />} />
         <Route exact path="/ColorMatcher" element={<ColorMatcher />} />
+        <Route exact path="/PlatformerGame" element={<PlatformerGame />} />
+        <Route exact path="/ColorFinder" element={<ColorFinder />} />
 
       </Routes>
     </Router>

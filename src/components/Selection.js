@@ -8,6 +8,7 @@ import circleImage from "../images/Circle.png"
 import estimationGameImage from "../images/EstimationGame.png"
 import colorGuessrImage from "../images/ColorGuessr.png"
 import colorMatcherImage from "../images/ColorMatcher.png"
+import colorFinderImage from "../images/ColorFinderImage.png"
 
 
 const Selection = () => {
@@ -19,6 +20,7 @@ const Selection = () => {
         { name: "Estimation Game", link: "./EstimationGame", image: estimationGameImage },
         { name: "Color Guessr", link: "./ColorGuessr", image: colorGuessrImage },
         { name: "Color Matcher", link: "./ColorMatcher", image: colorMatcherImage },
+        { name: "Color Finder", link: "./ColorFinder", image: colorFinderImage },
         ]
 
     const [size, setSize] = useState(200)
