@@ -14,13 +14,14 @@ import colorFinderImage from "../images/ColorFinderImage.png"
 const Selection = () => {
 
     let opts =
-        [{ name: "Bouncy", link: "./Bouncy", image: bouncyImage },
-        { name: "Baseball", link: "./Baseball", image: baseballImage },
-        { name: "Circle", link: "./Circle", image: circleImage },
-        { name: "Estimation Game", link: "./EstimationGame", image: estimationGameImage },
-        { name: "Color Guessr", link: "./ColorGuessr", image: colorGuessrImage },
-        { name: "Color Matcher", link: "./ColorMatcher", image: colorMatcherImage },
-        { name: "Color Finder", link: "./ColorFinder", image: colorFinderImage },
+        [
+            // { name: "Bouncy", link: "./Bouncy", image: bouncyImage },
+            { name: "Baseball", link: "./Baseball", image: baseballImage },
+            { name: "Circle", link: "./Circle", image: circleImage },
+            { name: "Estimation Game", link: "./EstimationGame", image: estimationGameImage },
+            { name: "Color Guessr", link: "./ColorGuessr", image: colorGuessrImage },
+            { name: "Color Matcher", link: "./ColorMatcher", image: colorMatcherImage },
+            { name: "Color Finder", link: "./ColorFinder", image: colorFinderImage },
         ]
 
     const [size, setSize] = useState(200)
@@ -50,7 +51,6 @@ const Selection = () => {
 
     return (
         <nav>
-
             <div className="row">
                 {opts.map((option) => {
 

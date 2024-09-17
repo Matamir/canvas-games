@@ -1,17 +1,48 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const Circle = () => {
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////                                    Not In Use                                                      ////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    // let isPlaying = false;
 
+    // const play = (frequency = 300, duration = 100) => {
+    //     let context = new AudioContext();
+
+    //     const gainNode = context.createGain();
+    //     gainNode.gain.value = 0.3
+    //     const oscillator = context.createOscillator();
+    //     oscillator.frequency.value = frequency;
+    //     oscillator.type = 'triangle';
+
+    //     oscillator.connect(gainNode);
+    //     gainNode.connect(context.destination);
+    //     oscillator.start(0);
+    //     setTimeout(() => {oscillator.stop(); context.close()}, duration);
+    // };
+
+    // function playAudio(height) {
+    //     if (!isPlaying) {
+    //         console.log("henlo");
+    //         isPlaying = true;
+    //         play(height * 100 + 200);
+
+    //         // Set a timeout longer than the duration to reset the isPlaying flag
+    //         setTimeout(() => {
+    //             isPlaying = false;
+    //         }, 100);
+    //     }
+    // }
 
     useEffect(() => {
 
         var canvas = document.getElementById("canvas");
         var context = canvas.getContext("2d");
 
-        
-        var CIRCLE_SIZE = Math.min(canvas.height,canvas.width)/2;
+
+        var CIRCLE_SIZE = Math.min(canvas.height, canvas.width) / 2;
         const BALL_SIZE = 25;
         const VELOCITY_ABSORBTION = 1;
         const GRAVITY = 0.1
@@ -19,7 +50,7 @@ const Circle = () => {
         function updateCanvasSize() {
             canvas.width = document.documentElement.clientWidth;
             canvas.height = document.documentElement.clientHeight;
-            CIRCLE_SIZE = Math.min(canvas.height,canvas.width)/2;
+            CIRCLE_SIZE = Math.min(canvas.height, canvas.width) / 2;
         }
 
         function drawBackground() {
@@ -55,17 +86,33 @@ const Circle = () => {
 
 
         let bouncingObject = []
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////                                    Not In Use                                                      ////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        // Adds a bouncy thing at a random location with random velocity
-        function addBouncyThing() {
-            let x = Math.random() * (canvas.width - 50);
-            let y = Math.random() * (canvas.height - 50);
-            let velX = Math.random() * 5;
-            let velY = Math.random() * 5;
-            let color = RandomColor();
+        // // Adds a bouncy thing at a random location with random velocity
+        // function addBouncyThing() {
+        //     let x = Math.random() * (canvas.width - 50);
+        //     let y = Math.random() * (canvas.height - 50);
+        //     let velX = Math.random() * 5;
+        //     let velY = Math.random() * 5;
+        //     let color = RandomColor();
 
-            bouncingObject.push({ x, y, velX, velY, color })
-        }
+        //     bouncingObject.push({ x, y, velX, velY, color })
+        // }
+
+        // // Add a bunch of balls
+        // let NUMBER_STARTING_BALLS = 0
+        // for (let i = 0; i < NUMBER_STARTING_BALLS; i++) {
+        //     addBouncyThing();
+        // }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
 
         // Adds a bouncy thing at mouse click location with no velocity
         function addBouncyThingAt(clickX, clickY) {
@@ -101,6 +148,8 @@ const Circle = () => {
 
                         // Calculate angle between ball and center of arc
                         let angle = Math.atan2(y - canvas.height / 2, x - canvas.width / 2);
+                        
+                        // playAudio(Math.abs(1.5 - angle))
 
                         // Reflect ball velocity based on angle of collision
                         let speed = Math.sqrt(velX * velX + velY * velY) * VELOCITY_ABSORBTION;
@@ -109,6 +158,7 @@ const Circle = () => {
                         velY = Math.sin(angle) * speed;
 
                     } else {
+
                         // Calculate angle between ball and center of arc
                         let angle = Math.atan2(y - canvas.height / 2, x - canvas.width / 2);
 
@@ -142,16 +192,9 @@ const Circle = () => {
 
         }
 
-        // Add a bunch of balls
-        let NUMBER_STARTING_BALLS = 0
-        for (let i = 0; i < NUMBER_STARTING_BALLS; i++) {
-            addBouncyThing();
-        }
-
         // Draw everything
         drawBackground();
         drawBouncyThings();
-
 
         // Add a new ball when the screen is clicked
         window.addEventListener("click", onmousedown);
@@ -171,6 +214,7 @@ const Circle = () => {
 
     return (
         <div>
+
             <canvas
                 style={{
                     backgroundColor: "",

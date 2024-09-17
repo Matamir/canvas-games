@@ -164,19 +164,21 @@ const Bouncy = () => {
         drawBouncyThings();
 
 
+
         // Add a new ball when the screen is clicked
-        window.addEventListener("click", onmousedown);
-        onmousedown = (event) => {
+        const onmousedown = (event) => {
             addBouncyThingAt(event.clientX, event.clientY);
         }
+        window.addEventListener("click", onmousedown);
+        
 
         // Automatically resize everything if the window size is changed
         const handleResize = () => { drawBoard(); }
         window.addEventListener("resize", handleResize);
+
         return () => {
             window.removeEventListener("resize", handleResize);
             window.removeEventListener("click", onclick);
-
         }
     }, [xGrav, yGrav]);
 
@@ -184,10 +186,12 @@ const Bouncy = () => {
         <div>
             <div class = "slider">
                 <input type="range" min="-.1" max= ".1" value ={xGrav} class="slider" id="xGrav" step="0.01" 
-                    onChange={(x) => setXGrav(parseFloat(x.target.value))} />
+                    onChange={(x) => setXGrav(parseFloat(x.target.value))} 
+                    />
                     {xGrav}
                 <input type="range" min="-.1" max= ".1" value ={yGrav} class="slider"  id="yGrav" step="0.01"
-                    onChange={(y) => setYGrav(parseFloat(y.target.value))} />
+                    onChange={(y) => setYGrav(parseFloat(y.target.value))} 
+                    />
                     {yGrav}
             </div>
 

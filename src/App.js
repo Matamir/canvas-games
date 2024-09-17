@@ -21,7 +21,7 @@ function App() {
     <Router>
       <Routes>
         <Route exact path="/" element={<Selection />} />
-        <Route exact path="/Bouncy" element={<Bouncy />} />
+        {/* <Route exact path="/Bouncy" element={<Bouncy />} /> */}
         <Route exact path="/Baseball" element={<Baseball />} />
         <Route exact path="/Circle" element={<Circle />} />
         <Route exact path="/EstimationGame" element={<EstimationGame />} />
