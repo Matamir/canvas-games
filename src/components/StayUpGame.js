@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-const PlatformerGame = () => {
+const StayUpGame = () => {
 
     useEffect(() => {
 
@@ -11,7 +11,8 @@ const PlatformerGame = () => {
 
         let SCREEN_SIZE = 1000
         let PLAYER_SIZE = 10
-        let PLAYER_SPEED = 0.05
+        let PLAYER_SPEED = 0.025
+        let GRAVITY = 0.0981
 
         let xOrigin = canvas.width / 2 - SCREEN_SIZE / 4
         let yOrigin = canvas.height / 2 - SCREEN_SIZE / 4
@@ -19,6 +20,27 @@ const PlatformerGame = () => {
         let yGameSize = SCREEN_SIZE / 2
 
         let pressedKeys = new Set()
+
+        let startTime = getTime();
+        let curTime = getTime();
+        let record = 0;
+
+        function getTime() {
+            return new Date().getTime();
+        }
+
+        function drawTimer() {
+            curTime = getTime();
+            context.font = "20px Arial"
+
+            let textToDisplay = "current record: " + (curTime - startTime) + "            all time record: " + record
+            context.fillText(textToDisplay, xOrigin + 10, yOrigin - 10)
+            if (curTime - startTime > 10000) {
+                SCREEN_SIZE -= 0.1
+            }
+
+            record = Math.max(curTime - startTime, record)
+        }
 
         function updateCanvasSize() {
             canvas.width = document.documentElement.clientWidth;
@@ -32,27 +54,38 @@ const PlatformerGame = () => {
         // const handleResize = () => { updateCanvasSize(); }
         // window.addEventListener("resize", handleResize);
 
+
+        function resetGame() {
+            startTime = getTime();
+            SCREEN_SIZE = 1000
+        }
+
         function movePlayer() {
             if (player.x + player.xVel > xGameSize - PLAYER_SIZE) {
                 player.x = xGameSize - PLAYER_SIZE
                 player.xVel = 0
+                resetGame()
             } else if (player.x + player.xVel < 0) {
                 player.x = 0
                 player.xVel = 0
+                resetGame()
             }
 
 
             if (player.y + player.yVel > yGameSize - PLAYER_SIZE) {
                 player.y = yGameSize - PLAYER_SIZE
                 player.yVel = 0
+                resetGame()
             } else if (player.y + player.yVel < 0) {
                 player.y = 0
                 player.yVel = 0
+                resetGame()
             }
 
 
             player.x += player.xVel
             player.y += player.yVel
+            player.yVel += GRAVITY
         }
 
         function animate() {
@@ -66,6 +99,8 @@ const PlatformerGame = () => {
             context.fillStyle = "red"
             context.fillRect(xOrigin + player.x, yOrigin + player.y, PLAYER_SIZE, PLAYER_SIZE)
 
+            drawTimer()
+
             requestAnimationFrame(animate)
         }
 
@@ -76,7 +111,7 @@ const PlatformerGame = () => {
         player.yVel = 0;
 
         function jump() {
-            console.log("JUMPING")
+            player.yVel -= 5
         }
 
         animate();
@@ -84,17 +119,15 @@ const PlatformerGame = () => {
         // Function to handle keyboard presses
         function controls(pollingRate) {
 
-            if (pressedKeys.has("Space")) {
+            if (pressedKeys.has("Space") || pressedKeys.has("KeyW")) {
                 jump();
+                pressedKeys.delete("Space")
+                pressedKeys.delete("KeyW")
             }
 
-            if (pressedKeys.has("KeyW")) {
-                player.yVel -= PLAYER_SPEED
-            }
-
-            if (pressedKeys.has("KeyS")) {
-                player.yVel += PLAYER_SPEED
-            }
+            // if (pressedKeys.has("KeyS")) {
+            //     player.yVel += PLAYER_SPEED
+            // }
 
             if (pressedKeys.has("KeyA")) {
                 player.xVel -= PLAYER_SPEED
@@ -123,6 +156,8 @@ const PlatformerGame = () => {
         }
     }, []);
 
+
+
     return (
         <div>
             <canvas
@@ -139,4 +174,4 @@ const PlatformerGame = () => {
     )
 
 }
-export default PlatformerGame;
+export default StayUpGame;
