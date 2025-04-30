@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
 
-const EstimationGame = () => {
+const GuessSliderPosition = () => {
 
 
-    let [goal, setGoal] = useState(Math.ceil(Math.random() * 100))
+    let [value, setValue] = useState(Math.ceil(Math.random() * 100))
     let [difficulty, setdifficulty] = useState(5)
     let min = 0;
     let max = 10000
-    const [value, setValue] = useState(min / 2);
+    const [guess, setGuess] = useState(0);
 
-    const handleInput = (event) => {
-        setValue(event.target.value)
-    }
+    // const handleInput = (event) => {
+    //     setValue(event.target.value)
+    // }
 
-    function resetGoal() {
-        setGoal(Math.ceil(Math.random() * 100))
+    function resetValue() {
+        setValue(Math.ceil(Math.random() * 100))
     }
 
     function updateDifficulty(val) {
@@ -39,9 +39,9 @@ const EstimationGame = () => {
             console.log(value)
             // let percent = ( Math.abs(value - goal) / ( (value + goal) / 2 ) ) * 100
             // console.log(percent)
-            if (Math.abs(value - goal) < difficulty) {
+            if (Math.abs(value - guess) < difficulty) {
                 window.alert("Your placement was: " + value + "\nGREAT JOB!!")
-                resetGoal();
+                resetValue();
             } else {
                 window.alert("Your placement was: " + value + "\nBetter luck next time :(")
             }
@@ -60,16 +60,16 @@ const EstimationGame = () => {
         <div style={{ width: "100%", height: "100%", position: "fixed", top: "50%" }}>
 
             <div style={{ position: "relative", left: "49%" }}>
-                {goal + " ± " + difficulty}
+                {value + " ± " + difficulty}
             </div>
-            <input id="slider" style={{ width: "80%", position: "relative", left: "10%" }} onInput={handleInput} type="range" min={min} max={max} value={value} step="1" />
+            <input id="slider" style={{ width: "80%", position: "relative", left: "10%" }} type="range" min={min} max={max} value={value*100} step="1" />
             <br />
             <button onClick={() => { submit() }} style={{ color: "blue", width: "10%", height: "5%", position: "relative", left: "45%" }} type="button" />
             <br />
             {/* <button onClick={()=>{resetGoal()}} className={"mt-2"} style={{fontSize: "30px", fontWeight:"bold", width: "3%", position:"relative", left: "8.5%"}}>
                 ⟳
             </button> */}
-            {difficultyChoice()}
+            {difficultyChoice()}c
 
             <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header">
@@ -87,4 +87,4 @@ const EstimationGame = () => {
         </div>
     )
 }
-export default EstimationGame;
+export default GuessSliderPosition;

@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import bouncyImage from "../images/Bouncy.png"
 import baseballImage from "../images/Baseball.png"
 import circleImage from "../images/Circle.png"
-import estimationGameImage from "../images/EstimationGame.png"
+import MoveTheSliderGame from "../images/EstimationGame.png"
 import colorGuessrImage from "../images/ColorGuessr.png"
 import colorMatcherImage from "../images/ColorMatcher.png"
 import colorFinderImage from "../images/ColorFinderImage.png"
@@ -17,9 +17,9 @@ const Selection = () => {
     let opts =
         [
             // { name: "Bouncy", link: "./Bouncy", image: bouncyImage },
-            { name: "Baseball", link: "./Baseball", image: baseballImage },
+            // { name: "Baseball", link: "./Baseball", image: baseballImage },
             { name: "Circle", link: "./Circle", image: circleImage },
-            { name: "Estimation Game", link: "./EstimationGame", image: estimationGameImage },
+            { name: "Move The Slider", link: "./MoveTheSlider", image: MoveTheSliderGame },
             { name: "Color Guessr", link: "./ColorGuessr", image: colorGuessrImage },
             { name: "Color Matcher", link: "./ColorMatcher", image: colorMatcherImage },
             { name: "Color Finder", link: "./ColorFinder", image: colorFinderImage },
