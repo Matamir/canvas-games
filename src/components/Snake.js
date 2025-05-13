@@ -56,12 +56,17 @@ const Snake = () => {
             context.fillStyle = "green";
             context.fill();
 
-            // DRAW TONGUE
+            // DRAW Eyes
             context.beginPath();
-            context.moveTo(widthStart + (snake[0][0] + .5 * size), heightStart + (snake[0][1] * size))
-            context.lineTo(widthStart + (snake[0][0] + .5 * size), heightStart + ((snake[0][1] + .5) * size))
-            context.strokeStyle = "pink";
+            // context.moveTo(widthStart + ((snake[0][0] + .5) * size), heightStart + (snake[0][1] * size))
+            // context.lineTo(widthStart + ((snake[0][0] + .5) * size), heightStart + ((snake[0][1] + .5) * size))
+            context.arc(widthStart + ((snake[0][0] + .25) * size), heightStart + ((snake[0][1] + .5) * size), size/20, 0, Math.PI * 2)
+            context.strokeStyle = "Black";
             context.lineWidth = size / 10;
+            context.stroke();
+            
+            context.beginPath();
+            context.arc(widthStart + ((snake[0][0] + .75) * size), heightStart + ((snake[0][1] + .5) * size), size/20, 0, Math.PI * 2)
             context.stroke();
         }
 
@@ -70,17 +75,39 @@ const Snake = () => {
 
         function updateSnake() {
             snake.forEach(snakePart => {
-                snakePart[0] += 0
+                snakePart[0] += 1
                 snakePart[1] += 1
+
+                if (snakePart[0] > 9) {
+                    snakePart[0] = 0
+                }
+
+                if (snakePart[0] < 0) {
+                    snakePart[0] = 9
+                }
+
+
+
+                if (snakePart[1] > 9) {
+                    snakePart[1] = 0
+                }
+
+                if (snakePart[1] < 0) {
+                    snakePart[1] = 9
+                }
+
             })
         }
 
         function animate() {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            drawGrid();
+
             drawSnake();
-            updateSnake();
+            //updateSnake();
             setTimeout(() => {
                 requestAnimationFrame(animate);
-            }, 333);
+            }, 0);
         }
 
         animate();
@@ -89,6 +116,44 @@ const Snake = () => {
         // Automatically resize everything if the window size is changed
         const handleResize = () => { drawGrid(); drawSnake(); }
         window.addEventListener("resize", handleResize);
+
+
+        window.addEventListener("keypress", onkeydown);
+        onkeydown = (event) => {
+            if (event.code == "KeyW" || event.code == "ArrowUp") {
+                snake.forEach(snakePart => {
+                    snakePart[0] += 0
+                    snakePart[1] += -1
+                })
+            } else if (event.code == "KeyS" || event.code == "ArrowDown") {
+                snake.forEach(snakePart => {
+                    snakePart[0] += 0
+                    snakePart[1] += 1
+                })
+            } else if (event.code == "KeyA" || event.code == "ArrowLeft") {
+                snake.forEach(snakePart => {
+                    snakePart[0] += -1
+                    snakePart[1] += 0
+                })
+            } else if (event.code == "KeyD" || event.code == "ArrowRight") {
+                snake.forEach(snakePart => {
+                    snakePart[0] += 1
+                    snakePart[1] += 0
+                })
+            }
+
+            // Makes snake loop around board
+            snake.forEach(snakePart => {
+                if (snakePart[0] > 9) { snakePart[0] = 0 }
+
+                if (snakePart[0] < 0) { snakePart[0] = 9 }
+
+                if (snakePart[1] > 9) { snakePart[1] = 0 }
+
+                if (snakePart[1] < 0) { snakePart[1] = 9 }
+            })
+        }
+
 
         return () => {
             window.removeEventListener("resize", handleResize);
