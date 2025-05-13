@@ -7,7 +7,8 @@ const Snake = () => {
         var canvas = document.getElementById("canvas");
         var context = canvas.getContext("2d");
 
-        let snake = [[0, 0]]
+        let snake = [[5, 5]]
+        let direction = "left";
 
 
         function drawGrid() {
@@ -60,13 +61,13 @@ const Snake = () => {
             context.beginPath();
             // context.moveTo(widthStart + ((snake[0][0] + .5) * size), heightStart + (snake[0][1] * size))
             // context.lineTo(widthStart + ((snake[0][0] + .5) * size), heightStart + ((snake[0][1] + .5) * size))
-            context.arc(widthStart + ((snake[0][0] + .25) * size), heightStart + ((snake[0][1] + .5) * size), size/20, 0, Math.PI * 2)
+            context.arc(widthStart + ((snake[0][0] + .25) * size), heightStart + ((snake[0][1] + .5) * size), size / 20, 0, Math.PI * 2)
             context.strokeStyle = "Black";
             context.lineWidth = size / 10;
             context.stroke();
-            
+
             context.beginPath();
-            context.arc(widthStart + ((snake[0][0] + .75) * size), heightStart + ((snake[0][1] + .5) * size), size/20, 0, Math.PI * 2)
+            context.arc(widthStart + ((snake[0][0] + .75) * size), heightStart + ((snake[0][1] + .5) * size), size / 20, 0, Math.PI * 2)
             context.stroke();
         }
 
@@ -74,40 +75,43 @@ const Snake = () => {
 
 
         function updateSnake() {
+            
+            switch (direction) {
+                case "up":
+                    snake.unshift([snake[0][0], snake[0][1] - 1]);
+                    break;
+                case "down":
+                    snake.unshift([snake[0][0], snake[0][1] + 1]);
+                    break;
+                case "left":
+                    snake.unshift([snake[0][0] - 1, snake[0][1]]);
+                    break;
+                case "right":
+                    snake.unshift([snake[0][0] + 1, snake[0][1]]);
+                    break;
+            }
+            snake.pop()
+
+            // Makes snake loop around board
             snake.forEach(snakePart => {
-                snakePart[0] += 1
-                snakePart[1] += 1
+                if (snakePart[0] > 9) { snakePart[0] = 0 }
 
-                if (snakePart[0] > 9) {
-                    snakePart[0] = 0
-                }
+                if (snakePart[0] < 0) { snakePart[0] = 9 }
 
-                if (snakePart[0] < 0) {
-                    snakePart[0] = 9
-                }
+                if (snakePart[1] > 9) { snakePart[1] = 0 }
 
-
-
-                if (snakePart[1] > 9) {
-                    snakePart[1] = 0
-                }
-
-                if (snakePart[1] < 0) {
-                    snakePart[1] = 9
-                }
-
+                if (snakePart[1] < 0) { snakePart[1] = 9 }
             })
         }
 
         function animate() {
             context.clearRect(0, 0, canvas.width, canvas.height);
             drawGrid();
-
             drawSnake();
-            //updateSnake();
+            updateSnake();
             setTimeout(() => {
                 requestAnimationFrame(animate);
-            }, 0);
+            }, 500);
         }
 
         animate();
@@ -121,25 +125,38 @@ const Snake = () => {
         window.addEventListener("keypress", onkeydown);
         onkeydown = (event) => {
             if (event.code == "KeyW" || event.code == "ArrowUp") {
-                snake.forEach(snakePart => {
-                    snakePart[0] += 0
-                    snakePart[1] += -1
-                })
+
+                direction = "up"
+
+                // snake.forEach(snakePart => {
+                //     snakePart[0] += 0
+                //     snakePart[1] += -1
+                // })
             } else if (event.code == "KeyS" || event.code == "ArrowDown") {
-                snake.forEach(snakePart => {
-                    snakePart[0] += 0
-                    snakePart[1] += 1
-                })
+
+                direction = "down"
+
+                // snake.forEach(snakePart => {
+                //     snakePart[0] += 0
+                //     snakePart[1] += 1
+                // })
             } else if (event.code == "KeyA" || event.code == "ArrowLeft") {
-                snake.forEach(snakePart => {
-                    snakePart[0] += -1
-                    snakePart[1] += 0
-                })
+
+                direction = "left"
+
+                // snake.forEach(snakePart => {
+                //     snakePart[0] += -1
+                //     snakePart[1] += 0
+                // })
+
             } else if (event.code == "KeyD" || event.code == "ArrowRight") {
-                snake.forEach(snakePart => {
-                    snakePart[0] += 1
-                    snakePart[1] += 0
-                })
+
+                direction = "right"
+
+                // snake.forEach(snakePart => {
+                //     snakePart[0] += 1
+                //     snakePart[1] += 0
+                // })
             }
 
             // Makes snake loop around board
