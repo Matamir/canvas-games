@@ -7,7 +7,8 @@ const Snake = () => {
         var canvas = document.getElementById("canvas");
         var context = canvas.getContext("2d");
 
-        let snake = [[5, 5]]
+        let squares = 20;
+        let snake = [[squares/2, squares/2]]
         let direction = "left";
 
 
@@ -18,16 +19,16 @@ const Snake = () => {
 
             let widthStart = canvas.width * .1
             let heightStart = canvas.height * .1
-            let size = (canvas.width < canvas.height) ? canvas.width * .08 : canvas.height * .08
+            let size = (canvas.width < canvas.height) ? canvas.width * (.8 / squares) : canvas.height * (.8 / squares)
 
-            for (let x = widthStart; x <= widthStart + (size * 10.1); x += size) {
+            for (let x = widthStart; x <= widthStart + (size * squares * 1.01); x += size) {
                 context.moveTo(x, heightStart);
-                context.lineTo(x, heightStart + (size * 10));
+                context.lineTo(x, heightStart + (size * squares));
             }
 
-            for (let y = heightStart; y <= heightStart + (size * 10.1); y += size) {
+            for (let y = heightStart; y <= heightStart + (size * squares * 1.01); y += size) {
                 context.moveTo(widthStart, y);
-                context.lineTo(widthStart + (size * 10), y);
+                context.lineTo(widthStart + (size * squares), y);
             }
 
 
@@ -42,7 +43,7 @@ const Snake = () => {
 
             let widthStart = canvas.width * .1
             let heightStart = canvas.height * .1
-            let size = (canvas.width < canvas.height) ? canvas.width * .08 : canvas.height * .08
+            let size = (canvas.width < canvas.height) ? canvas.width * (.8 / squares) : canvas.height * (.8 / squares)
 
 
             snake.forEach(snakePart => {
@@ -75,7 +76,7 @@ const Snake = () => {
 
 
         function updateSnake() {
-            
+
             switch (direction) {
                 case "up":
                     snake.unshift([snake[0][0], snake[0][1] - 1]);
@@ -90,17 +91,19 @@ const Snake = () => {
                     snake.unshift([snake[0][0] + 1, snake[0][1]]);
                     break;
             }
+
+
             snake.pop()
 
             // Makes snake loop around board
             snake.forEach(snakePart => {
-                if (snakePart[0] > 9) { snakePart[0] = 0 }
+                if (snakePart[0] > squares - 1) { snakePart[0] = 0 }
 
-                if (snakePart[0] < 0) { snakePart[0] = 9 }
+                if (snakePart[0] < 0) { snakePart[0] = squares - 1 }
 
-                if (snakePart[1] > 9) { snakePart[1] = 0 }
+                if (snakePart[1] > squares - 1) { snakePart[1] = 0 }
 
-                if (snakePart[1] < 0) { snakePart[1] = 9 }
+                if (snakePart[1] < 0) { snakePart[1] = squares - 1 }
             })
         }
 
@@ -111,7 +114,7 @@ const Snake = () => {
             updateSnake();
             setTimeout(() => {
                 requestAnimationFrame(animate);
-            }, 500);
+            }, 200);
         }
 
         animate();
